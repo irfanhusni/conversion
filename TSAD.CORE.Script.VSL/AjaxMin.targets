@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    
+    <UsingTask AssemblyFile="..\packages\AjaxMin.5.14.5506.26202\tools\net40\AjaxMinTask.dll" TaskName="AjaxMin" /> 
+    <UsingTask AssemblyFile="..\packages\AjaxMin.5.14.5506.26202\tools\net40\AjaxMinTask.dll" TaskName="AjaxMinBundleTask" />
+    <UsingTask AssemblyFile="..\packages\AjaxMin.5.14.5506.26202\tools\net40\AjaxMinTask.dll" TaskName="AjaxMinManifestTask" />
+    <UsingTask AssemblyFile="..\packages\AjaxMin.5.14.5506.26202\tools\net40\AjaxMinTask.dll" TaskName="AjaxMinManifestCleanTask" />
+
+    <PropertyGroup>
+        <!-- if the project has a Content folder, we want that to be the root output; otherwise just dump everything relative to the project root -->
+        <AjaxMinOutputFolder Condition="$(AjaxMinOutputFolder)==''">$(SolutionDir)TSAD.CORE.Script.VSL.Package\WebResources\Script %28JScript%29\</AjaxMinOutputFolder>
+        
+        <!-- default is to NOT treat warnings as errors -->
+        <AjaxMinTreatWarningsAsErrors Condition="$(AjaxMinTreatWarningsAsErrors)==''">false</AjaxMinTreatWarningsAsErrors>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <AjaxMinManifests Include="**/*.ajaxmin.xml"/>
+    </ItemGroup>
+
+    <!-- target to clean output for all ajaxmin manifest files in the project -->
+    <Target Name="CleanAjaxMinManifests" AfterTargets="Clean" Inputs="@AjaxMinManifests" Outputs="@(AjaxMinManifests->'%(FullPath).cleantrigger')">
+        <Message Text="Cleaning AjaxMin Manifests" Importance="high" />
+        <AjaxMinManifestCleanTask OutputFolder="$(AjaxMinOutputFolder)" Manifests="@(AjaxMinManifests)" />
+    </Target>
+
+    <!-- target to build all ajaxmin manifest files in the project -->
+    <Target Name="BuildAjaxMinManifests" AfterTargets="Build" Inputs="@AjaxMinManifests" Outputs="@(AjaxMinManifests->'%(FullPath).buildtrigger')">
+        <Message Text="Processing AjaxMin Manifests" Importance="high" />
+        <AjaxMinManifestTask ProjectDefaultSwitches="-define:$(DefineConstants) $(AjaxMinProjectDefaultSwitches)"
+                             Configuration="$(Configuration)"
+                             TreatWarningsAsErrors="$(AjaxMinTreatWarningsAsErrors)"
+                             InputFolder="$(ProjectDir)"
+                             OutputFolder="$(AjaxMinOutputFolder)"
+                             Manifests="@(AjaxMinManifests)" />
+    </Target>
+</Project>
