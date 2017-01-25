@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <arguments config="Debug">-ignore:ALL -debug –pponly</arguments>
+  <arguments config="Release"></arguments>
+  
+  <output path="xts_TSAD.CORE.Script.VSL.xts_vehiclesalesquote.js">
+    <input path="Namespace.js"/>
+    <input path="VehicleSalesQuote\Data.js"/>
+    <input path="VehicleSalesQuote\Business.js"/>
+    <input path="VehicleSalesQuote\Events.js"/>
+  </output>
+</root>

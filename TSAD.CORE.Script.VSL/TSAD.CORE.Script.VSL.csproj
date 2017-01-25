@@ -51,7 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AjaxMin.targets" />
+    <None Include="AjaxMin.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +62,10 @@
     <Content Include="VehicleSalesQuoteDetail\Data.js" />
     <Content Include="VehicleSalesQuoteDetail\Events.js" />
     <Content Include="VehicleSalesQuoteDetail\_manifest.ajaxmin.xml" />
+    <Content Include="VehicleSalesQuote\Business.js" />
+    <Content Include="VehicleSalesQuote\Data.js" />
+    <Content Include="VehicleSalesQuote\Events.js" />
+    <Content Include="VehicleSalesQuote\_manifest.ajaxmin.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
